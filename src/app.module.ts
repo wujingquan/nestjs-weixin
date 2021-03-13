@@ -4,6 +4,7 @@ import { MongoHighlighter } from '@mikro-orm/mongo-highlighter';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Example } from './entities/Example';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { AppService } from './app.service';
         };
       },
     }),
-    MikroOrmModule.forFeature([]),
+    MikroOrmModule.forFeature([Example]),
   ],
   controllers: [AppController],
   providers: [AppService],
