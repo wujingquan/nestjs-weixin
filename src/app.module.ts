@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Example } from './entities/Example';
+import { WeixinModule } from './weixin/weixin.module';
 
 @Module({
   imports: [
@@ -12,11 +13,12 @@ import { Example } from './entities/Example';
       imports: [ConfigModule.forRoot()],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const clientUrl = `mongodb://${config.get('DB_USERNAME')}:${config.get(
-          'DB_PASSWORD',
-        )}@${config.get('DB_HOST')}:${config.get('DB_PORT')}/${config.get(
-          'DB_NAME',
-        )}`;
+        // const clientUrl = `mongodb://${config.get('DB_USERNAME')}:${config.get(
+        //   'DB_PASSWORD',
+        // )}@${config.get('DB_HOST')}:${config.get('DB_PORT')}/${config.get(
+        //   'DB_NAME',
+        // )}`;
+        const clientUrl = config.get('clientUrl');
         console.log(clientUrl);
         return {
           strict: true,
@@ -30,6 +32,7 @@ import { Example } from './entities/Example';
       },
     }),
     MikroOrmModule.forFeature([Example]),
+    WeixinModule,
   ],
   controllers: [AppController],
   providers: [AppService],
